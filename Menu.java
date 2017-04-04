@@ -1,16 +1,19 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
     // private List<MenuEntry> list;
     private boolean isExit;
+    private Database dat;
     private int selection = 0;
 
-    public Menu() {
+    public Menu() throws ClassNotFoundException, SQLException {
         //list=new ArrayList<>();
         //isExit=false
+
     }
 
-    public void run() {
+    public void run() throws ClassNotFoundException, SQLException {
         while (selection != 4) {
             System.out.println("[1]  Find Employee");
             System.out.println("[2]  Add Employee");
@@ -27,11 +30,16 @@ public class Menu {
             switch (selection) {
                 case 1:
                     System.out.println("------------------------------------------");
-                    System.out.println("Please, write id Employee there");
-                    int id;
-                    if(reader.hasNextInt()){
-                        id=reader.nextInt();
-                    }
+                        System.out.println("Please, write id Employee there");
+                        int id;
+                        if (reader.hasNextInt()) {
+                            id = reader.nextInt();
+                            dat = new Database();
+                            System.out.println(dat.searchEmployee(id));
+                            dat.closeConn();
+
+                        } else
+                            System.out.println("Well, it isn't a number.Try again");
                     System.out.println("------------------------------------------");
                     break;
                 case 2:
