@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.LinkedList;
 
 public class Database {
     private Connection conn;
@@ -35,12 +36,12 @@ public class Database {
         else
             return tmp.toString();
     }
-    String searchEmployeeJob(String dept) throws ClassNotFoundException, SQLException {
+    String searchEmployeeJob(String job) throws ClassNotFoundException, SQLException {
         PreparedStatement stat = conn.prepareStatement("SELECT e.ename AS NAME,m.mg,e.hiredate,e.sal, d.dname AS DEPART,d.loc AS LOCATION " +
                 "FROM dept d,emp e, " +
                 "(SELECT e1.ename,e2.ename AS mg FROM emp e1,emp e2 WHERE e2.empno=e1.mgr) m " +
                 " WHERE e.job=? AND d.deptno=e.deptno AND m.ename=e.ename");
-        stat.setString(1, dept);
+        stat.setString(1, job);
 
         ResultSet res = stat.executeQuery();
         int size = res.getMetaData().getColumnCount();
@@ -61,18 +62,17 @@ public class Database {
             return tmp.toString();
     }
 
-    String searchEmployeeDept(String job) throws ClassNotFoundException, SQLException {
+    String searchEmployeeDept(String dept) throws ClassNotFoundException, SQLException {
         PreparedStatement stat = conn.prepareStatement("SELECT e.ename AS NAME,e.job,m.mg,e.hiredate,e.sal AS DEPART,d.loc AS LOCATION " +
                 "FROM dept d,emp e, " +
                 "(SELECT e1.ename,e2.ename AS mg FROM emp e1,emp e2 WHERE e2.empno=e1.mgr) m " +
                 " WHERE d.dname=? AND d.deptno=e.deptno AND m.ename=e.ename");
-        stat.setString(1, job);
+        stat.setString(1, dept);
 
         ResultSet res = stat.executeQuery();
         int size = res.getMetaData().getColumnCount();
         StringBuilder tmp = new StringBuilder();
-
-
+        
         while (res.next()) {
             for (int i = 1; i <= size; i++) {
                 tmp.append(res.getMetaData().getColumnName(i) + ": ");
