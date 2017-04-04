@@ -30,16 +30,20 @@ public class Menu {
             switch (selection) {
                 case 1:
                     System.out.println("------------------------------------------");
-                        System.out.println("Please, write id Employee there");
-                        int id;
-                        if (reader.hasNextInt()) {
-                            id = reader.nextInt();
+                    System.out.println("Please, write id Employee there");
+                    int id;
+                    if (reader.hasNextInt()) {
+                        id = reader.nextInt();
+                        System.out.println("Are you sure? Y/N");
+                        Scanner in=new Scanner(System.in);
+                        if (in.next().equals("Y")) {
                             dat = new Database();
                             System.out.println(dat.searchEmployee(id));
                             dat.closeConn();
+                        }
 
-                        } else
-                            System.out.println("Well, it isn't a number.Try again");
+                    } else
+                        System.out.println("Well, it isn't a number.Try again");
                     System.out.println("------------------------------------------");
                     break;
                 case 2:

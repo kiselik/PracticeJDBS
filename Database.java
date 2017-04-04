@@ -35,7 +35,7 @@ public class Database {
             }
         }
         if (tmp.toString().isEmpty())
-            return  "Well, i haven't this ad of Employee";
+            return  "Well, i haven't this id of Employee";
         else
         return tmp.toString();
     }
