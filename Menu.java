@@ -35,8 +35,7 @@ public class Menu {
                     if (reader.hasNextInt()) {
                         id = reader.nextInt();
                         System.out.println("Are you sure? Y/N");
-                        Scanner in=new Scanner(System.in);
-                        if (in.next().equals("Y")) {
+                        if (reader.next().equals("Y")) {
                             dat = new Database();
                             System.out.println(dat.searchEmployee(id));
                             dat.closeConn();
